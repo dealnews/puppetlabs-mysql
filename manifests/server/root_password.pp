@@ -10,12 +10,12 @@ class mysql::server::root_password {
       password_hash => mysql_password($mysql::server::root_password),
     }
 
-    file { "${::root_home}/.my.cnf":
-      content => template('mysql/my.cnf.pass.erb'),
-      owner   => 'root',
-      mode    => '0600',
-      require => Mysql_user['root@localhost'],
+    ::mysql::my_cnf_pass { "${::root_home}/.my.cnf":
+      user     => 'root',
+      password => $mysql::server::root_password,
+      path     => "${::root_home}/.my.cnf",
+      host     => 'localhost',
+      socket   => $options['client']['socket']
     }
   }
-
 }
