@@ -13,6 +13,6 @@ define mysql::my_cnf_pass (
       content => template('mysql/my.cnf.pass.erb'),
       owner   => $user,
       mode    => '0600',
-      require => [User[$user],Mysql_user["${dbuser}@${host}"]]
+      require => Mysql_user["${dbuser}@${host}"]
     }
 }
